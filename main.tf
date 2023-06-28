@@ -89,6 +89,28 @@ resource "aws_route_table_association" "private-assoc-1" {
   route_table_id = "${aws_route_table.main-private-rt.id}"
 }
 
+#Create security group with firewall rules#
+resource "aws_security_group" "TF.securityG01" {
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "http"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+ ingress {
+    from_port   = 
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = TF.securityG01
+  }
+}
+
 resource "aws_key_pair" "terraform-demo" {
   key_name   = "terraform-demo"
   public_key = "${file("terraform-demo.pub")}"
