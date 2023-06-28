@@ -89,28 +89,14 @@ resource "aws_route_table_association" "private-assoc-1" {
   route_table_id = "${aws_route_table.main-private-rt.id}"
 }
 
-#Create security group with firewall rules
-resource "aws_security_group" "sample-sg" {
-  name        =  sample-sg
-  description = "security group for sample"
+module "web_server_sg" {
+  source = "terraform-aws-modules/security-group/aws//modules/http-80"
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "http"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  name        = "web-server"
+  description = "Security group for web-server with HTTP ports open within VPC"
+  vpc_id      = "aws_vpc.main.id"
 
- ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = sample-sg
-  }
+  ingress_cidr_blocks = ["10.10.0.0/16"]
 }
 
 #resource "aws_key_pair" "terraform-demo" {
