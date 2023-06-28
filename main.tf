@@ -89,8 +89,10 @@ resource "aws_route_table_association" "private-assoc-1" {
   route_table_id = "${aws_route_table.main-private-rt.id}"
 }
 
-#Create security group with firewall rules#
-resource "aws_security_group" "securitygroup" {
+#Create security group with firewall rules
+resource "aws_security_group" "sample-sg" {
+  name        =  sample-sg
+  description = "security group for sample"
 
   ingress {
     from_port   = 80
@@ -107,7 +109,7 @@ resource "aws_security_group" "securitygroup" {
   }
 
   tags = {
-    Name = securitygroup
+    Name = sample-sg
   }
 }
 
