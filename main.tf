@@ -90,7 +90,7 @@ resource "aws_route_table_association" "private-assoc-1" {
 }
 
 #Create security group with firewall rules#
-resource "aws_security_group" "sg-01" {
+resource "aws_security_group" "securitygroup" {
 
   ingress {
     from_port   = 80
@@ -107,7 +107,7 @@ resource "aws_security_group" "sg-01" {
   }
 
   tags = {
-    Name = sg-01
+    Name = securitygroup
   }
 }
 
