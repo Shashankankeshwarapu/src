@@ -111,10 +111,10 @@ resource "aws_security_group" "TF.securityG01" {
   }
 }
 
-resource "aws_key_pair" "terraform-demo" {
-  key_name   = "terraform-demo"
-  public_key = "${file("terraform-demo.pub")}"
-}
+#resource "aws_key_pair" "terraform-demo" {
+  #key_name   = "terraform-demo"
+  #public_key = "${file("terraform-demo.pub")}"
+#}
 
 resource "aws_instance" "test-instance" {
 	ami = "ami-053b0d53c279acc90"
