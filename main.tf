@@ -89,14 +89,29 @@ resource "aws_route_table_association" "private-assoc-1" {
   route_table_id = "${aws_route_table.main-private-rt.id}"
 }
 
-module "web_server_sg" {
-  source = "terraform-aws-modules/security-group/aws//modules/http-80"
+resource "aws_security_group" "security_group" {
+  name        = "security_group"
+  description = "sample security group"
+  vpc_id      = aws_vpc.main.id
 
-  name        = "web-server"
-  description = "Security group for web-server with HTTP ports open within VPC"
-  vpc_id      = "aws_vpc.main.id"
+  ingress {
+    description      = "HTTP for VPC"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "http"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
 
-  ingress_cidr_blocks = ["10.10.0.0/16"]
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "security_group"
+  }
 }
 
 #resource "aws_key_pair" "terraform-demo" {
